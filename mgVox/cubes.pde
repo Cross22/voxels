@@ -2,7 +2,7 @@
 
 float ISOLEVEL= 50;
 float dLevel = 0.004; // delta increase
-final int CELL_WIDTH = 5;
+final int CELL_WIDTH = 6;
 final int GRID_COUNT = 70; // how many cells per axis
 final float[] gridValueArr= new float[GRID_COUNT*GRID_COUNT*GRID_COUNT];
 
@@ -175,17 +175,18 @@ void addTriangles(int i, int j, int k, PShape model) {
     final PVector v0 = vertList[ i0 ];
     final PVector v1 = vertList[ i1 ];
     final PVector v2 = vertList[ i2 ];
+    
     // append new triangle to model
-    model.vertex( v0.x, v0.y, v0.z );
-    model.vertex( v1.x, v1.y, v1.z );
-    model.vertex( v2.x, v2.y, v2.z );
+    model.vertex( v0.x, v0.y, v0.z, 0,0 );
+    model.vertex( v1.x, v1.y, v1.z, 0,0 );
+    model.vertex( v2.x, v2.y, v2.z, 0,0 );
   }
 }
 
 void animateLevel(float dt) {
-  // animate iso level
+//  // animate iso level
   ISOLEVEL += dt*dLevel;
-  if (ISOLEVEL>60 || ISOLEVEL <30 ) {
+  if (ISOLEVEL>60 || ISOLEVEL <40 ) {
     dLevel *= -1;
     ISOLEVEL += dt*dLevel;
   }
