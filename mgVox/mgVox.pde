@@ -1,10 +1,14 @@
+// Applet entry point.
+// Interesting algorithmic stuff happens in cubes file.
+// The Marching Cubes reference tables are in cubeTables.
 
 PShape mainModel;
 Arcball arcball;
 PShader myShader;
 
 void setup() {
-  size(1024, 768, P3D);
+//  size(1024, 768, P3D);
+  size(1920, 1080, P3D);
 
   frameRate(30);
   arcball = new Arcball(width/2, height/2, 600);   
@@ -31,4 +35,3 @@ void mousePressed() {
 void mouseDragged() {
   arcball.mouseDragged();
 }
-

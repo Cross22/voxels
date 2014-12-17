@@ -1,9 +1,7 @@
-// Tables from here: http://paulbourke.net/geometry/polygonise/ //<>// //<>// //<>//
-
-float ISOLEVEL= 50;
-float dLevel = 0.004; // delta increase
+float ISOLEVEL= 50;      // threshold value for finding the iso surface //<>//
+float dLevel = 0.004;    // delta increase, animates ISOLEVEL
 final int CELL_WIDTH = 6;
-final int GRID_COUNT = 70; // how many cells per axis
+final int GRID_COUNT = 100; // how many cells per axis
 final float[] gridValueArr= new float[GRID_COUNT*GRID_COUNT*GRID_COUNT];
 
 // temp vertices to be added
@@ -16,7 +14,7 @@ void setupGrid() {
   for (int k=0; k<GRID_COUNT; ++k) {
     for (int j=0; j<GRID_COUNT; ++j) {
       for (int i=0; i<GRID_COUNT; ++i) {    
-        setVal(i,j,k, density(i, j, k));
+        setVal(i,j,k, density(i*CELL_WIDTH, j*CELL_WIDTH, k*CELL_WIDTH));
       }
     }
   }
@@ -35,8 +33,8 @@ void setVal(int i, int j, int k, float newVal) {
 
 // base density function
 float density(int i, int j, int k) {
-  final float PRESCALE= 0.01;
-  float n= noise((float)i*PRESCALE, (float)j*PRESCALE, (float)k*PRESCALE)* 50*2; // 0..100 range
+  final float PRESCALE= 0.01 / CELL_WIDTH;
+  float n= noise((float)i*PRESCALE, (float)j*PRESCALE, (float)k*PRESCALE)* 50*2; // set output to 0..100 range
   return n;
 
   // sphere
@@ -162,8 +160,8 @@ void addTriangles(int i, int j, int k, PShape model) {
       VertexInterp(PosForCellVertex(i, j, k, 2), PosForCellVertex(i, j, k, 6), ValueForCellVertex(i, j, k, 2), ValueForCellVertex(i, j, k, 6), ISOLEVEL, vertList[10]);
   if (0!=(edgeIndex & 2048))
       VertexInterp(PosForCellVertex(i, j, k, 3), PosForCellVertex(i, j, k, 7), ValueForCellVertex(i, j, k, 3), ValueForCellVertex(i, j, k, 7), ISOLEVEL, vertList[11]);
- //<>//
-  // Check in table how many tris we need to create. TRI_TABLE is an array of arrays that is "-1" terminated
+
+  // Check in table how many tris we need to create. TRI_TABLE is an array of arrays that is "-1" terminated //<>//
   for (i=0; TRI_TABLE[cubeindex][i] != -1; i+=3) {
     //    println("i : " + i); 
     //    println("cube : " + cubeindex);

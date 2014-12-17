@@ -1,3 +1,5 @@
+// Tables from here: http://paulbourke.net/geometry/polygonise/ //<>// //<>//
+
 // For example: EDGE_TABLE[0b101] tells you which edge numbers (0..2^11) are intersected if vertices 0b1 and 0b100 are under the iso surface  
 final int[] EDGE_TABLE= new int[] {
   0x0, 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c, 
@@ -292,4 +294,3 @@ final int TRI_TABLE[][] = new int[][]
 {0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
-
