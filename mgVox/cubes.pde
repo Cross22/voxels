@@ -18,6 +18,17 @@ void setupGrid() {
       }
     }
   }
+  
+  // Fix up the triangle table so it contains a triangle count instead of being "-1 terminated"
+  for (int i=0;i<0xFF; ++i) {
+    int[] orig= TRI_TABLE[i];
+    int count=0;
+    for (; orig[count]!=-1; ++count) ;
+    int[] dest= new int[count+1];
+    dest[0]=count/3; // add number of triangles in front
+    System.arraycopy(orig,0,dest,1,count);
+    TRI_TABLE[i]=dest;
+  } 
 }
 
 
@@ -162,20 +173,19 @@ void addTriangles(int i, int j, int k, PShape model) {
       VertexInterp(PosForCellVertex(i, j, k, 3), PosForCellVertex(i, j, k, 7), ValueForCellVertex(i, j, k, 3), ValueForCellVertex(i, j, k, 7), ISOLEVEL, vertList[11]);
 
   // Check in table how many tris we need to create. TRI_TABLE is an array of arrays that is "-1" terminated //<>//
-  for (i=0; TRI_TABLE[cubeindex][i] != -1; i+=3) {
-    //    println("i : " + i); 
-    //    println("cube : " + cubeindex);
-    //    println("TRI_TABLE[cubeindex][i  ] : " + TRI_TABLE[cubeindex][i  ]); 
-    final int i0 = TRI_TABLE[cubeindex][i  ];
-    final int i1 = TRI_TABLE[cubeindex][i+1];
-    final int i2 = TRI_TABLE[cubeindex][i+2];
+ //<>//
+  final int tricount= TRI_TABLE[cubeindex][0];
+  for (i=0; i<tricount; ++i) {
+    final int i0 = TRI_TABLE[cubeindex][i*3+1];
+    final int i1 = TRI_TABLE[cubeindex][i*3+2];
+    final int i2 = TRI_TABLE[cubeindex][i*3+3];
 
     final PVector v0 = vertList[ i0 ];
     final PVector v1 = vertList[ i1 ];
     final PVector v2 = vertList[ i2 ];
     
     // append new triangle to model
-    model.vertex( v0.x, v0.y, v0.z, 0,0 );
+    model.vertex( vertList[ i0 ].x, vertList[ i0 ].y, vertList[ i0 ].z, 0,0 );
     model.vertex( v1.x, v1.y, v1.z, 0,0 );
     model.vertex( v2.x, v2.y, v2.z, 0,0 );
   }

@@ -37,7 +37,7 @@ final int[] EDGE_TABLE= new int[] {
 };
 
 // for a given edgeindex number, provides the edges that need to be intersected
-final int TRI_TABLE[][] = new int[][]
+int TRI_TABLE[][] = new int[][]
 {{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 {0, 8, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
 {0, 1, 9, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},

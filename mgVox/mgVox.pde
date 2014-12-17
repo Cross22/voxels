@@ -15,8 +15,23 @@ void setup() {
   setupGrid();
 
   myShader = loadShader("frag.glsl", "vert.glsl");
+  perf();
 }
 
+void perf() {
+  PShape[] arr= new PShape[20];
+  //warmup
+  for (int i=0; i<100; ++i) 
+    arr[i%20]=createModel();
+  
+  long start= System.currentTimeMillis();
+  for (int i=0; i<100; ++i) 
+    arr[i%20]=createModel();
+  long end= System.currentTimeMillis();
+  float total= (end-start)/100.0;
+  println("time(ms): "+ total );
+  exit();
+}
 void draw() {
   background(0);
   shader( myShader );
